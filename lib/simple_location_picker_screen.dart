@@ -76,13 +76,9 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
           // DISPLAY_ONLY MODE: no save button for display only mode
           widget.displayOnly
               ? Container()
-              : IconButton(
-                  icon: Icon(Icons.save),
-                  onPressed: () {
-                    Navigator.of(context).pop(_selectedLocation);
-                  },
-                  color: widget.appBarTextColor,
-                ),
+              : GestureDetector(onTap: () {
+                Navigator.of(context).pop(_selectedLocation);
+              },child: Text("NEXT", style: TextStyle(color: Colors.white,),),)
         ],
       ),
       body: _osmWidget(),
