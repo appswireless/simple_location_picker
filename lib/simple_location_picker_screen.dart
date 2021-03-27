@@ -8,7 +8,6 @@
 /// Works in two modes
 ///  1. Picker Mode: This is the default mode to pick a location and save it
 ///  2. DisplayOnly Mode: This displays a fixed location without being able to change it
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart' as slpMap;
 import 'package:simple_location_picker/utils/slp_constants.dart';
@@ -40,7 +39,6 @@ class SimpleLocationPicker extends StatefulWidget {
 
   /// Sets the appbar text color.
   final String appBarTitle;
-  final AppBar appBarFinal;
 
   SimpleLocationPicker(
       {this.initialLatitude = SLPConstants.DEFAULT_LATITUDE,
@@ -50,8 +48,7 @@ class SimpleLocationPicker extends StatefulWidget {
       this.appBarColor = Colors.blueAccent,
       this.appBarTextColor = Colors.white,
       this.appBarTitle = "Select Location",
-      this.markerColor = Colors.blueAccent,
-      this.appBarFinal,});
+      this.markerColor = Colors.blueAccent});
 
   @override
   _SimpleLocationPickerState createState() => _SimpleLocationPickerState();
@@ -70,7 +67,31 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.appBarFinal,
+      appBar: AppBar(
+        backgroundColor: widget.appBarColor,
+        title: Text(widget.appBarTitle,
+            style: TextStyle(color: widget.appBarTextColor)),
+        actions: <Widget>[
+          // DISPLAY_ONLY MODE: no save button for display only mode
+          widget.displayOnly
+              ? Container()
+              : GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop(_selectedLocation);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+        ],
+      ),
       body: _osmWidget(),
     );
   }
