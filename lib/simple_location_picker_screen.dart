@@ -40,6 +40,7 @@ class SimpleLocationPicker extends StatefulWidget {
 
   /// Sets the appbar text color.
   final String appBarTitle;
+  final AppBar appBarFinal;
 
   SimpleLocationPicker(
       {this.initialLatitude = SLPConstants.DEFAULT_LATITUDE,
@@ -49,7 +50,8 @@ class SimpleLocationPicker extends StatefulWidget {
       this.appBarColor = Colors.blueAccent,
       this.appBarTextColor = Colors.white,
       this.appBarTitle = "Select Location",
-      this.markerColor = Colors.blueAccent});
+      this.markerColor = Colors.blueAccent,
+      this.appBarFinal,});
 
   @override
   _SimpleLocationPickerState createState() => _SimpleLocationPickerState();
@@ -68,31 +70,7 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: widget.appBarColor,
-        title: Text(widget.appBarTitle,
-            style: TextStyle(color: widget.appBarTextColor)),
-        actions: <Widget>[
-          // DISPLAY_ONLY MODE: no save button for display only mode
-          widget.displayOnly
-              ? Container()
-              : GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop(_selectedLocation);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Text(
-                    "Next",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-        ],
-      ),
+      appBar: widget.appBarFinal,
       body: _osmWidget(),
     );
   }
